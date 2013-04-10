@@ -1,0 +1,70 @@
+Bagpipe Reader:1.0
+MIDINoteMappings,(54,56,58,59,61,63,64,66,68,56,58,60,61,63,65,66,68,70,55,57,59,60,62,64,65,67,69)
+FrequencyMappings,(370,415,466,494,554,622,659,740,831,415,466,523,554,622,699,740,831,932,392,440,494,523,587,659,699,784,880)
+InstrumentMappings,(71,71,45,33,1000,60,70)
+GracenoteDurations,(20,40,30,50,100,200,800,1200,250,250,250,500,200)
+FontSizes,(90,100,88,80,250)
+TuneFormat,(1,0,M,L,500,500,500,500,P,0,0)
+TuneTempo,84
+"BMW Symbols",(T,L,0,0,Times New Roman,16,700,0,0,18,0,0,0)
+"",(Y,C,0,0,Times New Roman,14,400,0,0,18,0,0,0)
+"Graham MacMaster",(M,R,0,0,Times New Roman,14,400,0,0,18,0,0,0)
+"",(F,R,0,0,Times New Roman,12,400,0,0,18,0,0,0)
+& sharplg sharpla sharpb sharpc sharpd sharpe sharpf sharphg sharpha
+naturallg naturalla naturalb naturalc naturald naturale naturalf naturalhg naturalha
+flatlg flatla flatb flatc flatd flate flatf flathg flatha !t
+&
+C
+C_
+2_2
+3_2
+2_4
+3_4
+4_4
+5_4
+6_4
+7_4 
+2_8
+3_8
+4_8
+5_8
+6_8
+7_8
+8_8
+9_8
+10_8
+11_8
+12_8
+15_8
+18_8
+21_8 
+2_16
+3_16
+4_16
+5_16
+6_16
+7_16
+8_16
+9_16
+10_16
+11_16
+12_16
+!t
+
+& sharpf sharpc 4_4
+!
+dg !
+tar tarb tdbb tdbc tdbd tdbe tdbf tdbla tdblg tstd !
+lgstd lhpeld lhstd lpeld ltpeld brl bubly chedare ltstd pelb !
+pelc peld pele crunl dbb dbc dbd dbe dbf dbha !
+dbhg dbla dblg dbstf abr dbsthg tstf  !
+edre edreb edrec edred eg !
+
+fermatlg fermatla fermatb fermatc fermatd fermate fermatf fermathg fermatha !
+!t
+
+
+pc
+
+! !I !t '1 '2 '22 '224 '23 '24 'b 'c 'd 'e 'f 'ha 'hg 'la 'lg ^3e bis_' 'bis ^2e ^43e ^53e ^64e ^74e ''!I _'  B_16 ^46e ^54e ^76e ^3s ^3b ^3c ^3d ^3f ^3ha ^3hg ^3la ^3lg ^tb ^tc ^td ^tf ^tha ^thg ^tla ^tlg ^ts ^te ^2s ^43s ^53s ^64s ^74s ^46s ^54s ^76s E_16 E_2 E_32 E_4 E_8 F_16 F_2 F_32 F_4 F_8 gbr gg ggrpb ggrpc grp grpb gstb gstc gstd HA_16 HA_2 HA_32 HA_4 HA_8 tpelb tpelc tpeld tpele tstb tstc hbubly hdbb hdbc hdbd hdbe hdbf hdbla hdblg HG_16 HG_2 HG_32 HG_4 HG_8 tgrpc thrd tgrpb gste gstf hgrpb hgrpc hpelb hpelc hpeld hpele hstb hstc hstd hvthrd I! LA_16 LA_2 LA_32 LA_4 LA_8 gstla tste I!'' strb strc strd stre strf strhg strla strlg tstla tg hstf hstla pella tpella hpella ggrpla ggrpd ggrpe ggrpf tgrpla tgrpd tgrpe tgrpf tgrphg '25 '26 '27 '28 cadged cadaed cadae cadge caded hiharin dare embari endari chedari hedari darodo dre deda tra gdare gedre enbain otro odro adeda chelalho phiharin fcadged fcadge fcaded fcadaed fcadae segno dalsegno REST_1 pedre pdare pembari pendari pchedari phedari pdarodo penbain potro podro padeda pgrp ptra pdili REST_2 REST_4 REST_8 REST_16 hste pl pt REST_32 'si 'do !! hcrunlla phcla hcrunllg phclg crunllg pclg crunlb pcb pcmb pcmc pcmd htarla phtla htarlg phtlg tarlg ptlg ptb ptriplg ptripla ptripb ptripc ptmb ptmc ptmd edrelg edrela pedrelg pedrela pedreb pedrec pedred phlla plb lem lemb hlemla dili rodin fcadaf fcadgf cadaf cadgf cade  fcade hedale hchechere chechere pchechere tchechere tdare tedre htra genbain gotro godro gadeda tenbain totro todro tadeda din echolg echola echob echoc echod echoe echof echohg echoha fg tarblg ptblg tarbrea ptbrea tarbbrea ptbbrea phtriplg phtripla phtripb phtripc pttriplg pttripla pttripb pttripc crunlblg pcblg cg bg ag hhvthrd hthrd hsthg tsthg tbr ''lg ''la ''b ''c ''d ''e ''f ''hg ''ha hgrpla hgrpd hgrpdb hgrpe hgrpf hgrphg hgrpha ggrpdb tgrpdb pelf tpelf tpelhg hpelf hpelhg fine  dacapoalfine  'intro hst2la hst2b hst2c hst2d lhst2d hst2e hst2f hst2hg hst2ha gst2la gst2b gst2c gst2d lgst2d gst2e gst2f tst2la tst2b tst2c tst2d ltst2d tst2e tst2f tst2hg st2la st2b st2c st2d lst2d st2e st2f st2hg st2ha dlg dla db dc elg ela eb ec ed flg fla fb fc fd fe glg gla gb gc gd gf tlg tla tb tc td te tf thg ge hst3la hst3b hst3c hst3d lhst3d hst3e hst3f hst3hg hst3ha gst3la gst3b gst3c gst3d lgst3d gst3e gst3f tst3la tst3b tst3c tst3d ltst3d tst3e tst3f tst3hg st3la st3b st3c st3d lst3d st3e st3f st3hg st3ha hgrp htar hcrunl hlemlg hcrunllgla darodo16 pdarodo16 hdarodo phdarodo B_2 B_32 B_4 lembrea lembbrea plbrea plbbrea crunlbrea crunlbbrea pcbrea pcbbrea hlemlabrea phllabrea htarlabrea phtlabrea hcrunllabrea phclabrea tra8 ptra8 phtra  coda dacapoalcoda codasection endarig gendari
+
