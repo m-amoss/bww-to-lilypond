@@ -42,18 +42,57 @@ class Converter:
             "I!":"\\bar \"|.\"",
             "!t":"\\bar \"|\" \\break\n\n",
             "_'":"\\set Score.repeatCommands = #'((volta #f)) \\bar \"|\"\n",
-            "thrd":"\\thrwd",
+
+            # Birls
             "gbr":"\\gbirl",
             "brl":"\\wbirl",
             "abr":"\\birl",
-            "lgstd":"\\dbld",
-            "gste":"\\slure",
+            
+            # Grips
             "grp":"\\grip",
+            "grpb":"\\dgrip",
+            
+            # Taorluaths
             "tar":"\\taor",
+            "tarb":"\\dtaor",
+            
+            # Slurs
+            "gstla":"\\slura",
+            "gstb":"\\slurb",
+            "gstc":"\\slurc",
             "gstd":"\\slurd",
-            "tdbf":"\\tdblf",
-            "tdblg":"\\tdblG",
-            "lhstd":"\\Gthrwd"
+            "gste":"\\slure",
+            "gstf":"\\slurf",
+            "gsthg":"\\slurg",
+            "gstha":"\\slurA",
+            
+            # Half slurs
+            "hstla":"\\hslura",
+            "hstb":"\\hslurb",
+            "hstc":"\\hslurc",
+            "hstd":"\\hslurd",
+            "hste":"\\hslure",
+            "hstf":"\\hslurf",
+            "hsthg":"\\hslurg",
+            "hstha":"\\hslurA",
+            
+            # Thumb slurs
+            "tstla":"\\tslura",
+            "tstb":"\\tslurb",
+            "tstc":"\\tslurc",
+            "tstd":"\\tslurd",
+            "tste":"\\tslure",
+            "tstf":"\\tslurf",
+            "tsthg":"\\tslurg",
+            "tstha":"\\tslurA",
+            
+            # Throws
+            "bubly":"\\darodo",
+            "darodo":"\\darodo",
+            
+            "lgstd":"\\dbld",
+            "lhstd":"\\Gthrwd",
+            "thrd":"\\thrwd"
         }
         
         """
@@ -110,16 +149,16 @@ class Converter:
         """
         abs_file = os.path.join(os.getcwd(),file_path)
         file_name = os.path.basename(abs_file)
-        (self.name, ext) = file_name.split(".")
+        self.name = os.path.splitext(file_name)[0]
         
         if os.path.isfile(abs_file):
             self.original_file = abs_file
             self.file_dir = os.path.dirname(abs_file)
         else:
-            raise Exception(bww_file_path+" is not a file")
+            raise Exception(file_path + " is not a file.")
     
     def run(self):
-        
+        print "Running converter on: %s" % self.original_file
         input_file = open(self.original_file, "r")
         self.input_text = input_file.read()
         input_file.close()
@@ -191,7 +230,7 @@ class Converter:
             return
         
         # Handle thumb doublings.
-        thumb_doubling_match = self.thumb_doubling_regex(element)
+        thumb_doubling_match = self.thumb_doubling_regex.search(element)
         if thumb_doubling_match:
             self.add_thumb_doubling(thumb_doubling_match)
             return
@@ -216,8 +255,9 @@ class Converter:
         
         # Handle slur ties.
         if element == "^ts":
-          self.slur_tie_pending = True
-          return
+            self.slur_tie_pending = True
+            self.lilypond_elements.append("(")
+            return
         
         # Handle repeats.
         sub_repeat_match = self.sub_repeat_regex.search(element)
@@ -255,29 +295,31 @@ class Converter:
         note = melody_note_match.group("note")
         time = melody_note_match.group("time")
         direction = melody_note_match.group("dir")
-        lilypond_melody_note = self.get_lilypond_note(note, "melody note") + time
-        if lilypond_melody_note:
-            # Add the note.
-            self.lilypond_elements.append(lilypond_melody_note)
+        lilypond_note = self.get_lilypond_note(note, "melody note")
+        if lilypond_note:
+            lilypond_melody_note = lilypond_note + time
+            if lilypond_melody_note:
+                # Add the note.
+                self.lilypond_elements.append(lilypond_melody_note)
             
-            # Store index of the note we just added.
-            self.previous_melody_note_index = len(self.lilypond_elements) - 1
+                # Store index of the note we just added.
+                self.previous_melody_note_index = len(self.lilypond_elements) - 1
             
-            # Perform note grouping logic.
-            if direction == "r" and not self.in_note_group:
-                # Every time a "r" is seen, start a note group.
-                self.in_note_group = True
-                self.lilypond_elements.append("[")
-            elif direction == "l":
-                if self.in_note_group:
-                    self.in_note_group = False
-                    self.lilypond_elements.append("]")
-                    self.last_note_group_close = len(self.lilypond_elements) - 1
-                else:
-                    # Delete the last note group close.
-                    del(self.lilypond_elements[self.last_note_group_close])
-                    self.previous_melody_note_index -= 1
-                    self.lilypond_elements.append("]")
+                # Perform note grouping logic.
+                if direction == "r" and not self.in_note_group:
+                    # Every time a "r" is seen, start a note group.
+                    self.in_note_group = True
+                    self.lilypond_elements.append("[")
+                elif direction == "l":
+                    if self.in_note_group:
+                        self.in_note_group = False
+                        self.lilypond_elements.append("]")
+                        self.last_note_group_close = len(self.lilypond_elements) - 1
+                    else:
+                        # Delete the last note group close.
+                        del(self.lilypond_elements[self.last_note_group_close])
+                        self.previous_melody_note_index -= 1
+                        self.lilypond_elements.append("]")
 
     def add_grace_note(self, grace_note_match):
         note = self.get_lilypond_note(grace_note_match.group(1), "grace note")
@@ -298,7 +340,7 @@ class Converter:
             self.lilypond_elements.append(half_doubling)
     
     def add_thumb_doubling(self, thumb_doubling_match):
-        note = self.get_lilypond_note(half_doubling_match.group(1), "thumb-doubling")
+        note = self.get_lilypond_note(thumb_doubling_match.group(1), "thumb-doubling")
         if note:
             thumb_doubling = "\\tdbl%s" % note
             self.lilypond_elements.append(thumb_doubling)
@@ -334,7 +376,7 @@ class Converter:
         note_count = 0
         index = len(self.lilypond_elements) - 1
         while note_count < slur_length:
-            element = self.lilypond_elements[elem_index]
+            element = self.lilypond_elements[index]
 
             # If the element is a melody note, increment the note count.
             if self.lilypond_note_regex.search(element):
@@ -344,7 +386,7 @@ class Converter:
             index -= 1
         
         # Start the slur just after the start note.
-        self.lilypond_elements.insert(elem_index + 1,"(")
+        self.lilypond_elements.insert(index + 1,"(")
         
         # End the slur.
         self.lilypond_elements.append(")")
