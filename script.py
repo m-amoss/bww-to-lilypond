@@ -38,6 +38,7 @@ class Converter:
             "!":"\\bar \"|\"\n",
             "!I":"\\bar \"|.\" \\break \n",
             "''!I":"\\bar \":|\" \\break\n",
+            "''!It":"\\bar \":|\" \\break\n",
             "I!''":"\\bar \"|:\"",
             "I!":"\\bar \"|.\"",
             "!t":"\\bar \"|\" \\break\n\n",
@@ -51,6 +52,13 @@ class Converter:
             # Grips
             "grp":"\\grip",
             "grpb":"\\dgrip",
+            
+            # Catches
+            "hgrpla":"\\catcha",
+            "hgrpb":"\\catchb",
+            "hgrpc":"\\catchc",
+            "hgrpd":"\\catchd",
+            "hgrpe":"\\catche",
             
             # Taorluaths
             "tar":"\\taor",
@@ -89,10 +97,28 @@ class Converter:
             # Throws
             "bubly":"\\darodo",
             "darodo":"\\darodo",
+            "thrd":"\\thrwd",
+            "hthrd":"\\gripthrwd",
+            
+            # Shakes
+            "pella":"\\shakea",
+            "pelb":"\\shakeb",
+            "pelc":"\\shakec",
+            "peld":"\\shaked",
+            "pele":"\\shakee",
+            "pelf":"\\shakef",
+            
+            # Half Shakes
+            "hpella":"\\shakea",
+            "hpelb":"\\shakeb",
+            "hpelc":"\\shakec",
+            "hpeld":"\\shaked",
+            "hpele":"\\shakee",
+            "hpelf":"\\shakef",
+            "hpelhg":"\\shakeg",
             
             "lgstd":"\\dbld",
-            "lhstd":"\\Gthrwd",
-            "thrd":"\\thrwd"
+            "lhstd":"\\Gthrwd"
         }
         
         """
@@ -139,7 +165,10 @@ class Converter:
         self.previous_melody_note_index = 0
         
         # Remembers whether a slur tie has been seen.
-        slur_tie_pending = False
+        self.slur_tie_pending = False
+        
+        # Remembers if the start of a tie has been seen.
+        self.tie_pending = False
         
         # Remembers if a note group has been started.
         self.in_note_group = False
@@ -204,6 +233,12 @@ class Converter:
         if time_signature_match:
             self.add_time_signature(time_signature_match)
             return
+        elif element == "C":
+            self.lilypond_elements.append("\\defaultTimeSignature \\time 4/4")
+            return
+        elif element == "C_":
+            self.lilypond_elements.append("\\defaultTimeSignature \\time 2/4")
+            return
         
         # Handle melody notes.
         melody_note_match = self.melody_note_regex.search(element)
@@ -253,10 +288,12 @@ class Converter:
             self.add_slur(slur_match)
             return
         
-        # Handle slur ties.
-        if element == "^ts":
-            self.slur_tie_pending = True
-            self.lilypond_elements.append("(")
+        # Handle ties.
+        if element == "^te":
+            self.end_tie()
+            return
+        elif "^t" in element:
+            self.start_tie()
             return
         
         # Handle repeats.
@@ -299,6 +336,10 @@ class Converter:
         if lilypond_note:
             lilypond_melody_note = lilypond_note + time
             if lilypond_melody_note:
+                
+                if self.tie_pending:
+                    lilypond_melody_note += " ~"
+                
                 # Add the note.
                 self.lilypond_elements.append(lilypond_melody_note)
             
@@ -391,11 +432,21 @@ class Converter:
         # End the slur.
         self.lilypond_elements.append(")")
     
+    def start_tie(self):
+        self.tie_pending = True
+        
+    def end_tie(self):
+        self.tie_pending = False
+        
+        # Remove the tilde "~" from the most recent melody note.
+        recent = self.lilypond_elements[self.previous_melody_note_index].replace("~", "")
+        self.lilypond_elements[self.previous_melody_note_index] = recent
+    
     def add_sub_repeat(self, sub_repeat_match):
         sub_repeat_number = sub_repeat_match.group(1)
         sub_repeat = "\\set Score.repeatCommands = #'((volta \"%s\")) " % sub_repeat_number
         self.lilypond_elements.append(sub_repeat)
-
+    
     def get_lilypond_note(self, note, purpose=""):
         note = note.lower()
         try:
@@ -464,6 +515,7 @@ class Converter:
 }
 
 {
+  \\numericTimeSignature
   \\hideKeySignature
   %s
 }''' % (self.metadata["title"],
