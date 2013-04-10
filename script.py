@@ -74,6 +74,9 @@ class Converter:
         # Regex for a half-doubling.
         self.half_doubling_regex = re.compile("^hdb([h|l]*[g|a|b|c|d|e|f]{1})")
         
+        # Regex for a thumb doubling.
+        self.thumb_doubling_regex = re.compile("^tdb([h|l]*[g|a|b|c|d|e|f]{1})")
+        
         # Regex for a strike.
         self.strike_regex = re.compile("str([h|l]*[abcdefg])")
         
@@ -187,6 +190,12 @@ class Converter:
             self.add_half_doubling(half_doubling_match)
             return
         
+        # Handle thumb doublings.
+        thumb_doubling_match = self.thumb_doubling_regex(element)
+        if thumb_doubling_match:
+            self.add_thumb_doubling(thumb_doubling_match)
+            return
+        
         # Handle strikes.
         strike_match = self.strike_regex.search(element)
         if strike_match:
@@ -287,6 +296,13 @@ class Converter:
         if note:
             half_doubling = "\\hdbl%s" % note
             self.lilypond_elements.append(half_doubling)
+    
+    def add_thumb_doubling(self, thumb_doubling_match):
+        note = self.get_lilypond_note(half_doubling_match.group(1), "thumb-doubling")
+        if note:
+            thumb_doubling = "\\tdbl%s" % note
+            self.lilypond_elements.append(thumb_doubling)
+        
     
     def add_strike(self, strike_match):
         
