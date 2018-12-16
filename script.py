@@ -235,7 +235,7 @@ class Converter:
                 self.lilypond_elements.append(dict_result)
                 return
         except KeyError:
-            print "Unparsed: " + element
+            print("Unparsed: " + element)
     
     def add_time_signature(self, time_signature_match):
         time_signature = "%s/%s" % (time_signature_match.group(1), time_signature_match.group(2))
@@ -308,7 +308,7 @@ class Converter:
             else:
                 self.lilypond_elements[self.previous_melody_note_index] += "."
         except IndexError:
-            print "Invalid dot placement."
+            print("Invalid dot placement.")
     
     def add_slur(self, slur_match):
         
@@ -346,7 +346,7 @@ class Converter:
             message = "Unknown note value discovered: %s" % note
             if purpose != "":
                 message = "%s\n\tFor: %s" % (message, purpose)
-            print message
+            print(message)
             return None
             
     def calculate_partial(self):
@@ -417,7 +417,7 @@ class Converter:
     
     def quit(self, message=None):
         if message is not None:
-            print message
+            print(message)
         sys.exit()
 
 
