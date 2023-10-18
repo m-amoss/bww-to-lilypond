@@ -6,7 +6,7 @@ Overview
 
 This project is a Python script to convert old bagpipe music scores written in the Bagpipe Music Writer format to LilyPond notation.
 
-The initial idea for this was not my own, but my discovery of Jezra Lickter's bwwtolily project inspired me to do some additional work and extension of his original code, [which is available here](http://www.jezra.net/projects/bwwtolily).
+The initial idea for this was not my own, but my discovery of Jezra Lickter's bwwtolily project inspired me to do some additional work and extension of his original code, [which is available here](https://www.jezra.net/projects/bwwtolily.html).
 
 Using The Script
 ---
