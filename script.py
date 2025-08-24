@@ -187,7 +187,7 @@ class Converter:
             raise Exception(file_path + " is not a file.")
     
     def run(self):
-        print "Running converter on: %s" % self.original_file
+        print("Running converter on: %s" % self.original_file)
         input_file = open(self.original_file, "r")
         self.input_text = input_file.read()
         input_file.close()
